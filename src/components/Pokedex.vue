@@ -132,6 +132,8 @@ export default {
           return '#311B92'
         case 'rock':
           return '#4E342E'
+        case 'dragon':
+          return '#304FFE'
 
         default:
           return '#f4511e'
