@@ -10,7 +10,7 @@
     <div class="filters">
       <div class="checkbox-container" v-for="type in types" :key="type">
         <input type="checkbox" :name="type" :id="type" @change="updateFilters(type)" />
-        <label :for="type" :style="{ before: bacgroundColor }">{{ type }}</label>
+        <label :for="type">{{ type }}</label>
       </div>
     </div>
     <transition name="fade" mode="out-in">
@@ -174,12 +174,23 @@ export default {
   display: flex;
   flex-direction: column;
   transform: translateY(-50%);
+  box-shadow: 2px 2px 25px lightgrey;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  padding: 10px 80px 10px 0px;
+
   /*  CHECKBOX ANIMATION  */
 
   .checkbox-container {
     background-color: #fff;
     display: block;
     position: relative;
+    transition: 0.4s;
+
+    &:hover {
+      transition: 0.4s all;
+      transform: scale(1.1);
+    }
 
     label {
       margin: 2px auto;
@@ -259,6 +270,13 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 800px) {
+  .filters {
+    display: none;
+  }
+}
+
 .pokedex-container {
   display: flex;
   flex-direction: column;
