@@ -7,12 +7,12 @@
       </div>
       <p class="main-subtitle">Basic pokedex in Vue.js</p>
     </header>
-    <!-- <div class="filters">
+    <div class="filters">
       <div class="checkbox-container" v-for="type in types" :key="type">
         <input type="checkbox" :name="type" :id="type" @change="updateFilters(type)" />
-        <label :for="type">{{ type }}</label>
+        <label :for="type" :style="{ before: bacgroundColor }">{{ type }}</label>
       </div>
-    </div>-->
+    </div>
     <transition name="fade" mode="out-in">
       <div class="loading" v-if="pokemonsLength !== 151" key="loading">
         <div class="loading-bar" :style="{ width: percentage + '%'}"></div>
@@ -20,11 +20,12 @@
       </div>
       <div class="cards-container" v-else key="cards">
         <div class="card" v-for="pokemon in pokemons" :key="pokemon.id">
-          <!-- :visible="inFilters(pokemon.types[0].type.name)" -->
           <PokemonCard
             :name="pokemon.name"
             :sprite="pokemon.sprites.front_default"
             :type="pokemon.types[0].type.name"
+            :color="typeToColor(pokemon.types[0].type.name)"
+            v-show="inFilters(pokemon.types[0].type.name)"
           />
         </div>
       </div>
@@ -39,20 +40,22 @@ export default {
   components: {
     PokemonCard
   },
-  props: {
-    name: String,
-    sprite: String
-  },
+  /***************
+       STATE 
+  ***************/
   data() {
     return {
       pokemons: [],
       types: [],
-      filters: ['All']
+      filters: []
     }
   },
   mounted() {
     this.getDatas()
   },
+  /***************
+      METODS 
+  ***************/
   methods: {
     getDatas() {
       for (let i = 1; i <= 151; i++) {
@@ -84,15 +87,58 @@ export default {
       } else if (this.filters.includes(filter)) {
         filters.splice(filters.indexOf(filter), 1)
       }
-      console.log(filter + this.inFilters(filter))
     },
     inFilters(type) {
       const filters = this.filters
       type = type.toUpperCase()
 
+      if (filters.length === 0) {
+        return true
+      }
+
       return filters.includes(type)
+    },
+    typeToColor(type) {
+      switch (type) {
+        case 'poison':
+          return '#9C27B0'
+        case 'fire':
+          return '#FF3D00'
+        case 'flying':
+          return '#BBDEFB'
+        case 'water':
+          return '#2196F3'
+        case 'bug':
+          return '#9E9D24'
+        case 'steel':
+          return '#546E7A'
+        case 'normal':
+          return '#9E9E9E'
+        case 'electric':
+          return '#FDD835'
+        case 'ground':
+          return '#8D6E63'
+        case 'ice':
+          return '#80DEEA'
+        case 'fairy':
+          return '#F48FB1'
+        case 'grass':
+          return '#43A047'
+        case 'fighting':
+          return '#212121'
+        case 'psychic':
+          return '#311B92'
+        case 'rock':
+          return '#4E342E'
+
+        default:
+          return '#f4511e'
+      }
     }
   },
+  /***************
+     COMPUTED 
+  ***************/
   computed: {
     pokemonsLength() {
       return this.pokemons.length
@@ -155,7 +201,7 @@ export default {
         height: 10px;
         border-radius: 50%;
         content: '';
-        background-color: #5562eb;
+        background-color: #ef5350;
         position: absolute;
         left: 50%;
         top: 50%;
@@ -194,8 +240,8 @@ export default {
       }
 
       &:after {
-        background-color: #54e0c7;
-        border-color: #54e0c7;
+        background-color: #424242;
+        border-color: #424242;
       }
     }
 
@@ -252,8 +298,8 @@ export default {
   flex-wrap: wrap;
 }
 .card {
-  min-width: 200px;
-  margin: auto 5%;
+  // min-width: 200px;
+  // margin: auto 5%;
 }
 .fade-enter-active,
 .fade-leave-active {

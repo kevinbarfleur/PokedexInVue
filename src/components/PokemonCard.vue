@@ -17,12 +17,18 @@
 
 <script>
 export default {
+  /***************
+       PROPS 
+  ***************/
   props: {
     name: String,
     type: String,
-    sprite: String
-    // Test filtres => visible: Boolean
+    sprite: String,
+    color: String
   },
+  /***************
+       STATE 
+  ***************/
   data() {
     return {
       pokemonName: '',
@@ -33,70 +39,19 @@ export default {
   },
   mounted() {
     this.getProps()
-    this.typeToColor()
   },
+  /***************
+      METODS 
+  ***************/
   methods: {
     getProps() {
       this.pokemonName = this.formatUpper(this.name)
       this.pokemonType = this.type
+      this.pokemonColorType = this.color
       this.pokemonSprite = this.sprite
-      // Tests Filtres : this.showCard = this.visible
     },
     formatUpper(name) {
       return name.charAt(0).toUpperCase() + name.substr(1)
-    },
-    typeToColor() {
-      switch (this.pokemonType) {
-        case 'poison':
-          this.pokemonColorType = '#9C27B0'
-          break
-        case 'fire':
-          this.pokemonColorType = '#FF3D00'
-          break
-        case 'flying':
-          this.pokemonColorType = '#BBDEFB'
-          break
-        case 'water':
-          this.pokemonColorType = '#2196F3'
-          break
-        case 'bug':
-          this.pokemonColorType = '#9E9D24'
-          break
-        case 'steel':
-          this.pokemonColorType = '#546E7A'
-          break
-        case 'normal':
-          this.pokemonColorType = '#9E9E9E'
-          break
-        case 'electric':
-          this.pokemonColorType = '#FDD835'
-          break
-        case 'ground':
-          this.pokemonColorType = '#8D6E63'
-          break
-        case 'ice':
-          this.pokemonColorType = '#80DEEA'
-          break
-        case 'fairy':
-          this.pokemonColorType = '#F48FB1'
-          break
-        case 'grass':
-          this.pokemonColorType = '#43A047'
-          break
-        case 'fighting':
-          this.pokemonColorType = '#212121'
-          break
-        case 'psychic':
-          this.pokemonColorType = '#311B92'
-          break
-        case 'rock':
-          this.pokemonColorType = '#4E342E'
-          break
-
-        default:
-          this.pokemonColorType = '#f4511e'
-          break
-      }
     }
   }
 }
@@ -108,7 +63,7 @@ export default {
   min-width: 200px;
 
   padding: 5%;
-  margin: 20% auto;
+  margin: 20% 50px 20% 50px;
 
   background-color: white;
   border: 1px solid #fafafa;
