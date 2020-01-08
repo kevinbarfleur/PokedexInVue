@@ -1,4 +1,5 @@
 <template>
+  <!-- Tests filtres :  v-show="this.visible" -->
   <div class="pokemon-card">
     <h3 class="pokemon-name">{{ this.pokemonName }}</h3>
     <p>
@@ -19,8 +20,8 @@ export default {
   props: {
     name: String,
     type: String,
-    sprite: String,
-    changeView: Function
+    sprite: String
+    // Test filtres => visible: Boolean
   },
   data() {
     return {
@@ -39,6 +40,7 @@ export default {
       this.pokemonName = this.formatUpper(this.name)
       this.pokemonType = this.type
       this.pokemonSprite = this.sprite
+      // Tests Filtres : this.showCard = this.visible
     },
     formatUpper(name) {
       return name.charAt(0).toUpperCase() + name.substr(1)

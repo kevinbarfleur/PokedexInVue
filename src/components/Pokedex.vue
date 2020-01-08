@@ -7,19 +7,20 @@
       </div>
       <p class="main-subtitle">Basic pokedex in Vue.js</p>
     </header>
-    <div class="filters">
+    <!-- <div class="filters">
       <div class="checkbox-container" v-for="type in types" :key="type">
-        <input type="checkbox" :name="type" :id="type" v-model="type.filters" />
+        <input type="checkbox" :name="type" :id="type" @change="updateFilters(type)" />
         <label :for="type">{{ type }}</label>
       </div>
-    </div>
+    </div>-->
     <transition name="fade" mode="out-in">
       <div class="loading" v-if="pokemonsLength !== 151" key="loading">
-        <div class="loading-bar"></div>
+        <div class="loading-bar" :style="{ width: percentage + '%'}"></div>
         {{ percentage + "%" }}
       </div>
       <div class="cards-container" v-else key="cards">
         <div class="card" v-for="pokemon in pokemons" :key="pokemon.id">
+          <!-- :visible="inFilters(pokemon.types[0].type.name)" -->
           <PokemonCard
             :name="pokemon.name"
             :sprite="pokemon.sprites.front_default"
@@ -46,12 +47,11 @@ export default {
     return {
       pokemons: [],
       types: [],
-      filters: []
+      filters: ['All']
     }
   },
   mounted() {
     this.getDatas()
-    this.$set(this, this.filters, this.types)
   },
   methods: {
     getDatas() {
@@ -76,7 +76,21 @@ export default {
       return name.charAt(0).toUpperCase() + name.substr(1)
     },
     updateFilters(filter) {
-      console.log(filter)
+      const filters = this.filters
+      filter = filter.toUpperCase()
+
+      if (!filters.includes(filter)) {
+        filters.push(filter)
+      } else if (this.filters.includes(filter)) {
+        filters.splice(filters.indexOf(filter), 1)
+      }
+      console.log(filter + this.inFilters(filter))
+    },
+    inFilters(type) {
+      const filters = this.filters
+      type = type.toUpperCase()
+
+      return filters.includes(type)
     }
   },
   computed: {
@@ -122,7 +136,10 @@ export default {
     position: relative;
 
     label {
+      margin: 2px auto;
       padding: 12px 30px;
+      border-top-right-radius: 25px;
+      border-bottom-right-radius: 25px;
       width: 100%;
       display: block;
       text-align: left;
@@ -160,7 +177,7 @@ export default {
         border-radius: 50%;
         z-index: 2;
         position: absolute;
-        right: 30px;
+        right: 10px;
         top: 50%;
         transform: translateY(-50%);
         cursor: pointer;
