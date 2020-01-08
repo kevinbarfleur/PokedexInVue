@@ -7,12 +7,14 @@
       </div>
       <p class="main-subtitle">Basic pokedex in Vue.js</p>
     </header>
-    <div class="filters">
-      <div class="checkbox-container" v-for="type in types" :key="type">
-        <input type="checkbox" :name="type" :id="type" @change="updateFilters(type)" />
-        <label :for="type">{{ type }}</label>
+    <transition name="fade" mode="out-in">
+      <div class="filters" v-if="pokemonsLength === 151">
+        <div class="checkbox-container" v-for="type in types" :key="type">
+          <input type="checkbox" :name="type" :id="type" @change="updateFilters(type)" />
+          <label :for="type">{{ type }}</label>
+        </div>
       </div>
-    </div>
+    </transition>
     <transition name="fade" mode="out-in">
       <div class="loading" v-if="pokemonsLength !== 151" key="loading">
         <div class="loading-bar" :style="{ width: percentage + '%'}"></div>
@@ -315,10 +317,7 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
 }
-.card {
-  // min-width: 200px;
-  // margin: auto 5%;
-}
+
 .fade-enter-active,
 .fade-leave-active {
   transition-property: opacity;

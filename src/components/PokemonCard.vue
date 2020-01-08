@@ -1,18 +1,22 @@
 <template>
   <!-- Tests filtres :  v-show="this.visible" -->
-  <div class="pokemon-card">
-    <h3 class="pokemon-name">{{ this.pokemonName }}</h3>
-    <p>
-      Type :
-      <span :style="{ color: this.pokemonColorType }">{{ this.formatUpper(this.pokemonType) }}</span>
-    </p>
-    <img :src="this.pokemonSprite" :alt="'sprite ' + this.pokemonName" />
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis sit nam maxime. Accusamus, veritatis tempora harum voluptatem ut perspiciatis provident.</p>
-    <div id="button" :style="{ borderColor: this.pokemonColorType }">
-      <div id="slide" :style="{ backgroundColor: this.pokemonColorType }"></div>
-      <a href="#" :style="{ color: this.pokemonColorType }">Show More &#8594;</a>
+  <transition name="fade" mode="out-in">
+    <div class="pokemon-card">
+      <h3 class="pokemon-name">{{ this.pokemonName }}</h3>
+      <p>
+        Type :
+        <span
+          :style="{ color: this.pokemonColorType }"
+        >{{ this.formatUpper(this.pokemonType) }}</span>
+      </p>
+      <img :src="this.pokemonSprite" :alt="'sprite ' + this.pokemonName" />
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis sit nam maxime. Accusamus, veritatis tempora harum voluptatem ut perspiciatis provident.</p>
+      <div id="button" :style="{ borderColor: this.pokemonColorType }">
+        <div id="slide" :style="{ backgroundColor: this.pokemonColorType }"></div>
+        <a href="#" :style="{ color: this.pokemonColorType }">Show More &#8594;</a>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -118,5 +122,19 @@ export default {
   #button:hover a {
     color: white !important;
   }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition-property: opacity;
+  transition-duration: 0.5s;
+}
+
+.fade-enter-active {
+  transition-delay: 0.25s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 </style>
