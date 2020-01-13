@@ -1,5 +1,4 @@
 <template>
-  <!-- Tests filtres :  v-show="this.visible" -->
   <transition name="fade" mode="out-in">
     <div class="pokemon-card">
       <h3 class="pokemon-name">{{ this.pokemonName }}</h3>

@@ -158,6 +158,7 @@ export default {
 </script>
 
 <style lang="scss">
+// Styles
 .main-title {
   display: flex;
   flex-direction: row;
